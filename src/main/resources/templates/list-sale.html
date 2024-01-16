@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Metaforce</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/index}">Metaforce</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/users}">Назад</a>
+                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" aria-current="page" th:href="@{/register}">Регистрация</a>-->
+<!--                </li>-->
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <hr/>
+    <a th:href="@{/addSaleForm}" class="btn btn-primary">Добавить продажу</a>
+    <br/><br/>
+    <table class="table table-bordered table-striped" id="saleTable">
+
+        <thead>
+        <tr>
+            <th>Клуб</th>
+            <th>Имя</th>
+            <th>Услуга</th>
+            <th>Стоимость</th>
+            <th>Дата</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sale: ${sale}">
+            <td th:text="${sale.club}" />
+            <td th:text="${sale.name}" />
+            <td th:text="${sale.usluga}" />
+            <td th:text="${sale.price}" />
+            <td th:text="${sale.date}" />
+            <td>
+                <a th:href="@{/showUpdateForm(saleId=${sale.id})}" class="btn btn-info">Изменить</a>
+
+                <a th:href="@{/deleteSale(saleId=${sale.id})}" class="btn btn-danger ml-2">Удалить</a>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#saleTable").DataTable({
+            'aoColumnDefs': [{
+                'bSortable': false,
+                'aTargets': [-1] /* 1st one, start by the right */
+            }]
+        });
+    })
+</script>
+</body></html>
